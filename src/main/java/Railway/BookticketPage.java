@@ -10,13 +10,13 @@ import java.util.List;
 
 public class BookticketPage extends GeneralPage {
 
-    //Selectror
+    //Locator
     private final By lblTicket = By.xpath("//div[@id='page']/div[@id='content']/h1[@align='center']");
     private final By cboDepartDate = By.xpath("//div[@id='content']/div/form//select[@name ='Date']");
-    private final By cboDepartFrom = By.xpath("//div[@id='content']/div/form//select[@name ='DepartStation']");
-    private final By cboArriveAt = By.xpath("//div[@id='content']/div/form//select[@name='ArriveStation']");
-    private final By cboSeatStyle = By.xpath("//div[@id='content']/div/form//select[@name='SeatType']");
-    private final By cboTicketAmount = By.xpath("//div[@id='content']/div/form//select[@name='TicketAmount']");
+    private final By cboDepartFrom = By.xpath("//select[@name ='DepartStation']");
+    private final By cboArriveAt = By.xpath("//select[@name='ArriveStation']");
+    private final By cboSeatStyle = By.xpath("//select[@name='SeatType']");
+    private final By cboTicketAmount = By.xpath("//select[@name='TicketAmount']");
 
     //Element
     protected WebElement getCboDepartDate() {
@@ -44,6 +44,7 @@ public class BookticketPage extends GeneralPage {
     }
 
     //Methods
+
     public String getTitleTicketText() {
         return this.getLblTitleTicket().getText();
     }
@@ -53,44 +54,77 @@ public class BookticketPage extends GeneralPage {
         departDate.selectByIndex(3);
     }
 
+
     public void getDepartFrom() {
         Select departFrom = new Select(getCboDepartFrom());
         List<WebElement> allDepartFrom = departFrom.getOptions();
-        int count = allDepartFrom.size();
-        do {
-            for (int i = 0; i < allDepartFrom.size(); i++) {
-                String local = allDepartFrom.get(i).getText();
-                if (local.equals("Nha Trang")) {
-                    WebElement xpa = allDepartFrom.get(i);
-                    xpa.click();
-                } else {
-                    count--;
+        String local;
+        boolean flag = false;
+        {
+            do {
+                for (int i = 0; i < allDepartFrom.size(); i++) {
+                    local = allDepartFrom.get(i).getText();
+                    if (local.equals("Nha Trang")) {
+                        Constant.WEBDRIVER.findElement(By.xpath("//select[@name ='DepartStation']//option[text()='Nha Trang']")).click();
+                        flag = true;
+                        break;
+                    }
                 }
-            }
-        } while (count != 0);
-        Constant.WEBDRIVER.navigate().refresh();
-        getDepartFrom();
-    }
-
-    public void getArriveAt() {
-        Select arriveAt = new Select(getCboArriveAt());
-        List<WebElement> allArriveAt = arriveAt.getOptions();
-        int count = allArriveAt.size();
-        do {
-            for (int i = 0; i < allArriveAt.size(); i++) {
-                String local = allArriveAt.get(i).getText();
-                if (local.equals("Sài Gòn")) {
-                    WebElement xpa = allArriveAt.get(i);
-                    xpa.click();
-                } else {
-                    count--;
+                if (!flag) {
+                    Constant.WEBDRIVER.navigate().refresh();
+                    getDepartFrom();
                 }
-            }
-        } while (count != 0);
-    }
+            } while (flag == false);
 
-    public void getSeatType(){
-        
-    }
+        }
 
+//        public void getArriveAt () {
+//            Select arriveAt = new Select(getCboArriveAt());
+//            List<WebElement> allArriveAt = arriveAt.getOptions();
+//            int count = allArriveAt.size();
+//            do {
+//                for (int i = 0; i < allArriveAt.size(); i++) {
+//                    String local = allArriveAt.get(i).getText();
+//                    if (local.equals("Sài Gòn")) {
+//                        Constant.WEBDRIVER.findElement(By.xpath("//select[@name ='ArriveStation']//option[text()='Sài Gòn']")).click();
+//                        count = 0;
+//                    } else {
+//                        count--;
+//                    }
+//                }
+//            } while (count != 0);
+//            Constant.WEBDRIVER.navigate().refresh();
+//            getDepartFrom();
+//        }
+
+//        public void getSeatType () {
+//            Select seatType = new Select(getCboSeatStyle());
+//            List<WebElement> allSeat = seatType.getOptions();
+//            int count = allSeat.size();
+//            for (int i = 0; i < allSeat.size(); i++) {
+//                String seat = allSeat.get(i).getText();
+//                if (seat.equals("Soft seat")) {
+//                    Constant.WEBDRIVER.findElement(By.xpath("//select[@name ='SeatType']//option[text()='Soft seat']")).click();
+//                    break;
+//                } else {
+//                    count--;
+//                }
+//            }
+//        }
+
+//        public void getTicketAmount () {
+//            Select ticketAmount = new Select(getCboTicketAmount());
+//            List<WebElement> allTicket = ticketAmount.getOptions();
+//            int count = allTicket.size();
+//            for (int i = 0; i < allTicket.size(); i++) {
+//                String ticket = allTicket.get(i).getText();
+//                if (ticket.equals("4")) {
+//                    Constant.WEBDRIVER.findElement(By.xpath("//div[@id='content']/div/form//select[@name ='TicketAmount']//option[text()='4']")).click();
+//                    break;
+//                } else {
+//                    count--;
+//                }
+//            }
+//        }
+    }
 }
