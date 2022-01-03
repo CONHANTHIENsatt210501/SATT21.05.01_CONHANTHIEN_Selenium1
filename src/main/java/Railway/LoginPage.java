@@ -10,7 +10,7 @@ public class LoginPage extends GeneralPage {
     //locator
     private final By txtUsername = By.id("username");
     private final By txtPassword = By.id("password");
-    private final By btnLogin = By.xpath("//input[@value='login']");
+    private final By btnLogin = By.xpath("//input[@value='Login']");
     private final By lblLoginErrorMsg = By.xpath("//p[@class='message error LoginForm']");
 
 

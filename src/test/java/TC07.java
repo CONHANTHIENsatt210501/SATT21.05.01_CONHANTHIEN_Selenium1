@@ -1,5 +1,4 @@
-import Constant.Constant;
-import Railway.AccountRandom;
+import Common.AccountRandom;
 import Railway.HomePage;
 import Railway.RegisterPage;
 import org.testng.Assert;

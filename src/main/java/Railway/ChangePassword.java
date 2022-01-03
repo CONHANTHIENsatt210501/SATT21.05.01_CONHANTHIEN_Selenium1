@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChangePassword {
+
     //Selector
     private final By tabChangePassword = By.xpath("//div[@id='menu']//a[@href = '/Account/ChangePassword.cshtml']");
     private final By txtCurrentPassword = By.id("currentPassword");

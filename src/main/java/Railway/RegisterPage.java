@@ -59,8 +59,7 @@ public class RegisterPage {
         this.getTxtPassword().sendKeys(password);
         this.getTxtConfirm().sendKeys(confirm);
         this.getTxtPid().sendKeys(pid);
-//        this.getBtnRegister().click();
-
+        this.getBtnRegister().click();
     }
 
     public String getMgsRegisterAccountUsed() {

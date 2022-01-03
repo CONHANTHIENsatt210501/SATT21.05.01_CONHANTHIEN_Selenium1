@@ -7,15 +7,17 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class TC04 extends BaseTest {
-
     @Test(description = "TC04 - User can login into Railway with valid usename and password")
     public void BooktickTC04() {
         HomePage homePage = new HomePage();
         LoginPage loginPage = new LoginPage();
         BookticketPage bookTicket = new BookticketPage();
-        homePage.open();
 
+        System.out.println("1. Navigate to QA Railway Website");
+        homePage.open();
+        System.out.println("2. Click on Book ticket tab");
         bookTicket.gotoBookTickPage();
+        System.out.println("3. Login with valid account");
         loginPage.gotoLoginPage();
         loginPage.Login(Constant.USENAME, Constant.PASSWORD);
 

@@ -10,10 +10,13 @@ public class TC01 extends BaseTest {
     public void LoginTC01() {
         HomePage homePage = new HomePage();
         LoginPage loginPage = new LoginPage();
-        homePage.open();
 
+        System.out.println("1. Navigate to QA Railway Website");
+        homePage.open();
+        System.out.println("2. Click on Login tab");
         loginPage.gotoLoginPage();
-        loginPage.Login("3nhanthien@gmail.com", "1234567890");
+        System.out.println("3. Enter valid Email and Password");
+        loginPage.Login("100nhanthien@gmail.com", "123456789");
 
         String actualMsg = loginPage.getWelcomeMesage();
         String expectedMsg = "Welcome " + Constant.USENAME;

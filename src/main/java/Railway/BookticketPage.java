@@ -1,12 +1,15 @@
 package Railway;
 
 import Constant.Constant;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-
+import org.openqa.selenium.support.ui.*;
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 
 public class BookticketPage extends GeneralPage {
 
@@ -17,8 +20,33 @@ public class BookticketPage extends GeneralPage {
     private final By cboArriveAt = By.xpath("//select[@name='ArriveStation']");
     private final By cboSeatStyle = By.xpath("//select[@name='SeatType']");
     private final By cboTicketAmount = By.xpath("//select[@name='TicketAmount']");
+    private final By localDepartFrom = By.xpath("//select[@name ='DepartStation']//option[text()='Nha Trang']");
+    private final By localArriveAt = By.xpath("//select[@name ='ArriveStation']//option[text()='Sài Gòn']");
+    private final By seatTypeSoftSeat = By.xpath("//select[@name ='SeatType']//option[text()='Soft seat']");
+    private final By btnBookticket = By.xpath("//input[@value='Book ticket']");
+    private final By lblMessageBookSuccess = By.xpath("//div[@id='content']/h1");
 
-    //Element
+    //Element(
+    protected WebElement getlblMessBookSuccess(){
+        return Constant.WEBDRIVER.findElement(lblMessageBookSuccess);
+    }
+
+    protected WebElement getBtnBookTicket() {
+        return Constant.WEBDRIVER.findElement(btnBookticket);
+    }
+
+    protected WebElement getSeatTypeSoftSeat() {
+        return Constant.WEBDRIVER.findElement(seatTypeSoftSeat);
+    }
+
+    protected WebElement getLocalArriveAt() {
+        return Constant.WEBDRIVER.findElement(localArriveAt);
+    }
+
+    protected WebElement getLocalDepartFrom() {
+        return Constant.WEBDRIVER.findElement(localDepartFrom);
+    }
+
     protected WebElement getCboDepartDate() {
         return Constant.WEBDRIVER.findElement(cboDepartDate);
     }
@@ -44,6 +72,15 @@ public class BookticketPage extends GeneralPage {
     }
 
     //Methods
+    public String getLblMessBookSuccess(){
+        return this.getlblMessBookSuccess().getText();
+    }
+
+    public void getBtnSubmitBookTicket() {
+        Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
+        this.getBtnBookTicket().click();
+    }
+
 
     public String getTitleTicketText() {
         return this.getLblTitleTicket().getText();
@@ -54,18 +91,22 @@ public class BookticketPage extends GeneralPage {
         departDate.selectByIndex(3);
     }
 
-
-    public void getDepartFrom() {
+    public void getDepartFrom() throws IOException, ParseException, InterruptedException {
+        Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
         Select departFrom = new Select(getCboDepartFrom());
         List<WebElement> allDepartFrom = departFrom.getOptions();
-        String local;
+        JSONObject jsonObject = callJSON("src/main/java/Constant/data.json", 0);
+        JSONObject jsonObject1 = (JSONObject) jsonObject.get("TC14");
+        String localTestDepart = (String) jsonObject1.get("Depart from");
+        String localDepart;
         boolean flag = false;
-        {
+        try {
             do {
                 for (int i = 0; i < allDepartFrom.size(); i++) {
-                    local = allDepartFrom.get(i).getText();
-                    if (local.equals("Nha Trang")) {
-                        Constant.WEBDRIVER.findElement(By.xpath("//select[@name ='DepartStation']//option[text()='Nha Trang']")).click();
+                    localDepart = allDepartFrom.get(i).getText();
+                    if (localDepart.equals(localTestDepart)) {
+                        System.out.println("getDepartFrom pass");
+                        this.getLocalArriveAt().click();
                         flag = true;
                         break;
                     }
@@ -74,57 +115,95 @@ public class BookticketPage extends GeneralPage {
                     Constant.WEBDRIVER.navigate().refresh();
                     getDepartFrom();
                 }
-            } while (flag == false);
+            } while (!flag);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
+    public void getArriveAt() {
+        Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        Select arriveAt = new Select(getCboArriveAt());
+        List<WebElement> allArriveAt = arriveAt.getOptions();
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = callJSON("src/main/java/Constant/data.json", 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObject1 = (JSONObject) jsonObject.get("TC14");
+        String localTest0 = (String) jsonObject1.get("Arrive at");
+        String local0;
+        boolean flag = false;
+        {
+            try {
+                do {
+                    for (int i = 0; i < allArriveAt.size(); i++) {
+                        local0 = allArriveAt.get(i).getText();
+                        if (local0.equals(localTest0)) {
+                            WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 10);
+                            wait.until(ExpectedConditions.visibilityOfElementLocated(localArriveAt)).click();
+                            System.out.println("getArriveAt pass");
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (!flag) {
+                        Constant.WEBDRIVER.navigate().refresh();
+                        getDepartFrom();
+                    }
+                } while (flag == false);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
+    public void getSeatType() throws IOException, ParseException {
+        Select seatType = new Select(getCboSeatStyle());
+        List<WebElement> allSeat = seatType.getOptions();
+        JSONObject jsonObject = callJSON("src/main/java/Constant/data.json", 0);
+        JSONObject jsonObject1 = (JSONObject) jsonObject.get("TC14");
+        String seatTest = (String) jsonObject1.get("Seat type");
+        try {
+            for (int i = 0; i < allSeat.size(); i++) {
+                String seat = allSeat.get(i).getText();
+                if (seat.equals(seatTest)) {
+                    WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 10);
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(seatTypeSoftSeat)).click();
+                    System.out.println("seat style pass");
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
-//        public void getArriveAt () {
-//            Select arriveAt = new Select(getCboArriveAt());
-//            List<WebElement> allArriveAt = arriveAt.getOptions();
-//            int count = allArriveAt.size();
-//            do {
-//                for (int i = 0; i < allArriveAt.size(); i++) {
-//                    String local = allArriveAt.get(i).getText();
-//                    if (local.equals("Sài Gòn")) {
-//                        Constant.WEBDRIVER.findElement(By.xpath("//select[@name ='ArriveStation']//option[text()='Sài Gòn']")).click();
-//                        count = 0;
-//                    } else {
-//                        count--;
-//                    }
-//                }
-//            } while (count != 0);
-//            Constant.WEBDRIVER.navigate().refresh();
-//            getDepartFrom();
-//        }
+    }
 
-//        public void getSeatType () {
-//            Select seatType = new Select(getCboSeatStyle());
-//            List<WebElement> allSeat = seatType.getOptions();
-//            int count = allSeat.size();
-//            for (int i = 0; i < allSeat.size(); i++) {
-//                String seat = allSeat.get(i).getText();
-//                if (seat.equals("Soft seat")) {
-//                    Constant.WEBDRIVER.findElement(By.xpath("//select[@name ='SeatType']//option[text()='Soft seat']")).click();
-//                    break;
-//                } else {
-//                    count--;
-//                }
-//            }
-//        }
+    public void getTicketAmount() throws IOException, ParseException {
+        Select ticketAmount = new Select(getCboTicketAmount());
+        List<WebElement> allTicket = ticketAmount.getOptions();
+        JSONObject jsonObject = callJSON("src/main/java/Constant/data.json", 0);
+        JSONObject jsonObject1 = (JSONObject) jsonObject.get("TC14");
+        String ticketTest = (String) jsonObject1.get("Ticket amount");
+        try {
+            for (int i = 0; i < allTicket.size(); i++) {
 
-//        public void getTicketAmount () {
-//            Select ticketAmount = new Select(getCboTicketAmount());
-//            List<WebElement> allTicket = ticketAmount.getOptions();
-//            int count = allTicket.size();
-//            for (int i = 0; i < allTicket.size(); i++) {
-//                String ticket = allTicket.get(i).getText();
-//                if (ticket.equals("4")) {
-//                    Constant.WEBDRIVER.findElement(By.xpath("//div[@id='content']/div/form//select[@name ='TicketAmount']//option[text()='4']")).click();
-//                    break;
-//                } else {
-//                    count--;
-//                }
-//            }
-//        }
+                String ticket = allTicket.get(i).getText();
+                if (ticket.equals(ticketTest)) {
+                    Constant.WEBDRIVER.findElement(By.xpath("//div[@id='content']/div/form//select[@name ='TicketAmount']//option[text()='5']")).click();
+
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
+
