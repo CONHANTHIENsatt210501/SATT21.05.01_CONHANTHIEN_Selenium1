@@ -8,9 +8,6 @@ public class AccountRandom {
     List<String> password = new ArrayList<>();
     List<String> email = new ArrayList<>();
 
-
-
-
     //Create Email random
     public String createEmail() {
         String generatedString = RandomStringUtils.randomAlphanumeric(8);

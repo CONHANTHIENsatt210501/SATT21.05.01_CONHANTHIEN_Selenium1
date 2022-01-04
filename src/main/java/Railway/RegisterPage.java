@@ -12,7 +12,7 @@ public class RegisterPage {
     private final By txtPassword = By.id("password");
     private final By txtConfirm = By.id("confirmPassword");
     private final By txtPid = By.id("pid");
-    private final By btnRegister = By.xpath("//input[@value = 'Register']");
+    private final By btnRegister = By.xpath("//*[@id='RegisterForm']/fieldset/p/input");
     private final By lblRegisterSuccess = By.xpath("//div[@id='content']//p[text()='Registration Confirmed! You can now log in to the site.']");
     private final By lblRegisterAccountUsed = By.xpath("//div[@id = 'content']//p[@class='message error']");
 
