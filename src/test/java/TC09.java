@@ -1,4 +1,5 @@
 import Common.AccountRandom;
+import Constant.Constant;
 import Railway.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,18 +13,14 @@ public class TC09 extends BaseTest {
         RegisterPage registerPage = new RegisterPage();
         ChangePassword changepass = new ChangePassword();
         AccountRandom accountRandom = new AccountRandom();
-
+        System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
-        registerPage.gotoRegister();
-        registerPage.register(
-                accountRandom.createEmail(),
-                accountRandom.createPassword(),
-                accountRandom.checkConfirm(accountRandom.createPassword()),
-                accountRandom.createPid());
+        System.out.println("2. Login with a valid account ");
         login.gotoLoginPage();
-        login.Login(accountRandom.createEmail(), accountRandom.createPassword());
+        login.Login(Constant.USENAME, Constant.PASSWORD);
+        System.out.println("3. Click on Change Password tab");
         changepass.gotoChangePassword();
-        changepass.changePassword("123456789", "123456789", "1234567890");
+        changepass.changePassword("123456789", "1234567890", "1234567890");
 
         String actualMsg = changepass.getErrorMessage();
         String expectedMsg = "Password change failed. Please correct the errors and try again.";

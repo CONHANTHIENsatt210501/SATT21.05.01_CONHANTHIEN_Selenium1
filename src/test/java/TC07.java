@@ -7,14 +7,13 @@ import org.testng.annotations.Test;
 public class TC07 extends BaseTest{
     @Test(description = "User can create new account")
     public void RegisterTC07(){
-
         HomePage home = new HomePage();
         RegisterPage registerPage = new RegisterPage();
         AccountRandom accountRandom = new AccountRandom();
+        System.out.println("1. Navigate to QA Railway Website");
         home.open();
-
+        System.out.println("2. Click on Register tab");
         registerPage.gotoRegister();
-
         registerPage.register(
                 accountRandom.createEmail()
                 ,accountRandom.createPassword()
@@ -22,9 +21,7 @@ public class TC07 extends BaseTest{
                 ,accountRandom.createPid());
 
         String actualMsg = registerPage.getMgsRegisterSuccess();
-//      String expectedMsg = "Registration Confirmed! You can now log in to the site.";
         String expectedMsg ="Thank you for registering your account";
-
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome msg is not display as expected");
 
     }

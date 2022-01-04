@@ -1,5 +1,6 @@
 import Common.AccountRandom;
 import Railway.HomePage;
+import Railway.LoginPage;
 import Railway.RegisterPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -10,11 +11,12 @@ public class TC08 extends BaseTest {
     public void LoginTC08() {
         HomePage home = new HomePage();
         RegisterPage registerPage = new RegisterPage();
+        LoginPage loginPage = new LoginPage();
         AccountRandom accountRandom = new AccountRandom();
+        System.out.println("1. Navigate to QA Railway Website");
         home.open();
-
+        System.out.println("2. Click on Login tab");
         registerPage.gotoRegister();
-
         registerPage.register(
                 accountRandom.createEmail(),
                 accountRandom.createPassword(),

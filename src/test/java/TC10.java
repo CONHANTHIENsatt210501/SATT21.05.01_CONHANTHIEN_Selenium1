@@ -12,8 +12,9 @@ public class TC10 extends BaseTest {
         HomePage homePage = new HomePage();
         RegisterPage registerPage = new RegisterPage();
         AccountRandom accountRandom = new AccountRandom();
-
+        System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
+        System.out.println("2. Click on Register tab");
         registerPage.gotoRegister();
         registerPage.register(Constant.USENAME,
                 Constant.PASSWORD,
