@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 public class GeneralPage {
@@ -41,13 +42,7 @@ public class GeneralPage {
 
     protected WebElement getLblLogout() {return Constant.WEBDRIVER.findElement(lblLogout);}
 
-    //Methods
-    public JSONObject callJSON(String url, int indexget) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        Object data = parser.parse(new FileReader(url));
-        JSONArray list = (JSONArray) data;
-        return (JSONObject) list.get(indexget);
-    }
+    //Method
 
     public String getWelcomeMesage() {
         return this.getLblWelcomeMesage().getText();
@@ -72,6 +67,7 @@ public class GeneralPage {
     }
 
     public void gotoBookTickPage() {
+        Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
         this.getTabBooktick().click();
 
     }

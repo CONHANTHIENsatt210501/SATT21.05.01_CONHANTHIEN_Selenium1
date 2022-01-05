@@ -26,16 +26,16 @@ public class BaseTest {
 
     }
 
-//    @AfterMethod
-//    public void afterMethod() {
-//        System.out.println("Post-condition");
-//        Constant.WEBDRIVER.quit();
-//        System.out.println("End Method");
-//    }
-//
-//
-//    @AfterTest
-//    public void closeTest(){
-//        System.out.println("End Test");
-//    }
+    @AfterMethod
+    public void afterMethod() {
+        System.out.println("Post-condition");
+        Constant.WEBDRIVER.quit();
+        System.out.println("End Method");
+    }
+
+
+    @AfterTest
+    public void closeTest(){
+        System.out.println("End Test");
+    }
 }

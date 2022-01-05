@@ -1,20 +1,15 @@
-[
-  {
-    "TC14": {
-      "Depart date": "",
-      "Depart from": "Nha Trang",
-      "Arrive at": "Sài Gòn",
-      "Seat type": "Soft seat",
-      "Ticket amount": "5"
-    },
-    "TC15": {
-      "Depart Station": "Đà Nẵng",
-      "Arrive Station": "Sài Gòn"
-    }
+{
+  "TC14": {
+    "Depart date": "",
+    "Depart from": "Nha Trang",
+    "Arrive at": "Sài Gòn",
+    "Seat type": "Soft seat",
+    "Ticket amount": "5"
+  },
+  "TC15": {
+    "Depart Station": "Đà Nẵng",
+    "Arrive Station": "Sài Gòn"
   }
-]
-
-
-
+}
 
 
