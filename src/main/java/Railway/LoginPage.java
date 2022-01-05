@@ -4,6 +4,8 @@ import Constant.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.concurrent.TimeUnit;
+
 public class LoginPage extends GeneralPage {
 
 
@@ -38,6 +40,7 @@ public class LoginPage extends GeneralPage {
         //Submit login
         this.getTxtUsername().sendKeys(name);
         this.getTxtPassword().sendKeys(password);
+        Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
         this.getBtnLogin().click();
     }
 
