@@ -11,7 +11,7 @@ public class TC09 extends BaseTest {
         HomePage homePage = new HomePage();
         LoginPage login = new LoginPage();
         RegisterPage registerPage = new RegisterPage();
-        ChangePassword changepass = new ChangePassword();
+        ChangePasswordPage changepass = new ChangePasswordPage();
         AccountRandom accountRandom = new AccountRandom();
         System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
