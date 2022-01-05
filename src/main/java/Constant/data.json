@@ -9,6 +9,13 @@
   "TC15": {
     "Depart Station": "Đà Nẵng",
     "Arrive Station": "Sài Gòn"
+  },
+  "TC16": {
+    "Depart date": "",
+    "Depart from": "Nha Trang",
+    "Arrive at": "Sài Gòn",
+    "Seat type": "Soft seat",
+    "Ticket amount": "1"
   }
 }
 

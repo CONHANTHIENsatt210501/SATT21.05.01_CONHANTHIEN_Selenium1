@@ -74,6 +74,8 @@ public class BookticketPage extends GeneralPage {
 
     public void getBtnSubmitBookTicket() {
         try{
+            WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 3000);
+            wait.until(ExpectedConditions.elementToBeClickable(getbtnBookTicket()));
             new Actions(Constant.WEBDRIVER).moveToElement(this.getbtnBookTicket()).click().perform();
         }catch (Exception e){
             System.out.println(e.getMessage());

@@ -33,9 +33,6 @@ public class TC15 extends BaseTest {
 
 
 
-        String excepMsg = "Ticket price from Sài Gòn to Phan Thiết";
-        String actualMsg = timetablePage.getLblMessage();
-        Assert.assertEquals(actualMsg,excepMsg,"Welcome msg is not display as expected");
     }
 
     @DataProvider(name = "data-provider")
