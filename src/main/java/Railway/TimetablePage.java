@@ -17,8 +17,6 @@ public class TimetablePage extends GeneralPage {
     private final By lblMessage = By.xpath("//tr[@class='TableSmallHeader']");
     //Dynamic Locator
     String dblRow = "//td[text()='%s']/following-sibling::td[text()='%s']/../td[count(//th[text()='Check Price']/preceding-sibling::th)+1]/a";
-    ///td[count(//th[text()='Check Price']/preceding-sibling::th]+1]
-    ///td[count(//th[text()='Check Price']/preceding-sibling::th)+1]
     //element
     protected WebElement getDblrow(String departStation, String ArriveStation) {
         return Constant.WEBDRIVER.findElement(By.xpath(String.format(dblRow, departStation, ArriveStation)));
@@ -36,7 +34,7 @@ public class TimetablePage extends GeneralPage {
     public void getDblRow(String depart, String arrive) {
         try {
             WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 3000);
-            wait.until(ExpectedConditions.elementToBeClickable(getDblrow(depart, arrive)));
+            wait.until(ExpectedConditions.visibilityOf(getDblrow(depart, arrive)));
             new Actions(Constant.WEBDRIVER).moveToElement(this.getDblrow(depart, arrive)).click().perform();
 
         } catch (Exception e) {

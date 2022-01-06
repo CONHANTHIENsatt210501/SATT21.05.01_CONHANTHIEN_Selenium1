@@ -16,6 +16,13 @@
     "Arrive at": "Sài Gòn",
     "Seat type": "Soft seat",
     "Ticket amount": "1"
+  },
+  "TC17": {
+    "Depart from": "Nha Trang",
+    "Arrive at": "Sài Gòn",
+    "Seat type": "Soft seat",
+    "Ticket amount 10": "10",
+    "Ticket amount 1": "1"
   }
 }
 

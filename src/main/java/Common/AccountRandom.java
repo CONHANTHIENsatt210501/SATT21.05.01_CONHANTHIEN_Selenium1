@@ -9,6 +9,8 @@ public class AccountRandom {
     List<String> email = new ArrayList<>();
 
     //Create Email random
+
+
     public String createEmail() {
         String generatedString = RandomStringUtils.randomAlphanumeric(8);
         email.add(generatedString);
@@ -18,7 +20,7 @@ public class AccountRandom {
 
     //Create Password random
     public String createPassword() {
-        String strPassword = RandomStringUtils.randomAscii(9);
+        String strPassword = RandomStringUtils.randomNumeric(9);
         password.add(strPassword);
         strPassword = password.toString();
         strPassword = strPassword.substring(1, strPassword.length() - 1);

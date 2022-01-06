@@ -19,6 +19,8 @@ public class BookticketPage extends GeneralPage {
     private final By cboDepartDate = By.xpath("//div[@id='content']/div/form//select[@name ='Date']");
     private final By btnBookTicket = By.xpath("//input[@value='Book ticket']");
     private final By lblMessageBookSuccess = By.xpath("//div[@id='content']/h1");
+    private final By lblErrorMessage = By.xpath("//p[@class='message error']");
+    private final By lblAmountErrMsg = By.xpath("//label[@class='validation-error']");
 
     //Dynamic Locator
     String dblDepartFrom = "//select[@name ='DepartStation']//option[text()='%s']";
@@ -28,6 +30,9 @@ public class BookticketPage extends GeneralPage {
     String dblDepartDate="//div[@id='content']/div/form//select[@name ='Date']//option[text()='%s']";
 
     //Element
+    protected WebElement getLblErrorMessage() {return Constant.WEBDRIVER.findElement(lblErrorMessage);}
+    protected WebElement getLblAmountErrMsg() {return Constant.WEBDRIVER.findElement(lblAmountErrMsg);}
+
     protected WebElement getDblDepartDate(String departDate){
         return Constant.WEBDRIVER.findElement(By.xpath(String.format(dblDepartDate, departDate)));
     }
@@ -67,6 +72,9 @@ public class BookticketPage extends GeneralPage {
     }
 
     //Methods
+    public String getErrorMessage() {return this.getLblErrorMessage().getText();}
+
+    public String getAmountErrMsg() {return this.getLblAmountErrMsg().getText();}
 
     public String getLblMessBookSuccess() {
         return this.getlblMessBookSuccess().getText();

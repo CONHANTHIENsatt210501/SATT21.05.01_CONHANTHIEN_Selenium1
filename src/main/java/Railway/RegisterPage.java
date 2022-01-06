@@ -3,6 +3,9 @@ package Railway;
 import Constant.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegisterPage {
 
@@ -59,6 +62,8 @@ public class RegisterPage {
         this.getTxtPassword().sendKeys(password);
         this.getTxtConfirm().sendKeys(confirm);
         this.getTxtPid().sendKeys(pid);
+        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 3000);
+        wait.until(ExpectedConditions.elementToBeClickable(getBtnRegister()));
         this.getBtnRegister().click();
     }
 
