@@ -82,9 +82,8 @@ public class BookticketPage extends GeneralPage {
 
     public void getBtnSubmitBookTicket() {
         try{
-            WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 3000);
-            wait.until(ExpectedConditions.elementToBeClickable(getbtnBookTicket()));
-            new Actions(Constant.WEBDRIVER).moveToElement(this.getbtnBookTicket()).click().perform();
+            WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 5000);
+            wait.until(ExpectedConditions.elementToBeClickable(getbtnBookTicket())).click();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -95,22 +94,29 @@ public class BookticketPage extends GeneralPage {
         return this.getLblTitleTicket().getText();
     }
 
-    public void getDepartDate() {
+    public void getDepartDate(String day) {
         Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
         try{
-            Calendar c = Calendar.getInstance();
-            int day = c.get(c.DATE)+7;
-            int month = c.get(c.MONTH)+1;
-            int year = c.get(c.YEAR);
-            String date = month+"/"+day+"/"+year;
-
-            this.getDblDepartDate(date).click();
+            this.getDblDepartDate(day).click();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
 
+    public String getDay(int day){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, day);
+        String time =   new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+        //'01/13/2022'
+        if (time.charAt(0) == '0'){
+            time = time.substring(1);
+        }
+        return time;
+    }
+
+
     public void getDepartFrom(String departFrom){
+        Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
         this.getDblDepartFrom(departFrom).click();
 
     }
@@ -132,4 +138,5 @@ public class BookticketPage extends GeneralPage {
     }
 
 }
+
 

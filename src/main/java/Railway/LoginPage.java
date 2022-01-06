@@ -3,6 +3,8 @@ package Railway;
 import Constant.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,12 +17,10 @@ public class LoginPage extends GeneralPage {
     private final By btnLogin = By.xpath("//input[@value='Login']");
     private final By lblLoginErrorMsg = By.xpath("//p[@class='message error LoginForm']");
 
-
     //Element
     protected WebElement getTxtUsername() {
         return Constant.WEBDRIVER.findElement(txtUsername);
     }
-
 
     protected WebElement getTxtPassword() {
         return Constant.WEBDRIVER.findElement(txtPassword);
@@ -40,8 +40,8 @@ public class LoginPage extends GeneralPage {
         //Submit login
         this.getTxtUsername().sendKeys(name);
         this.getTxtPassword().sendKeys(password);
-        Constant.WEBDRIVER.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
-        this.getBtnLogin().click();
+        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 20000);
+        wait.until(ExpectedConditions.elementToBeClickable(this.getBtnLogin())).click();
     }
 
     //Message error Login

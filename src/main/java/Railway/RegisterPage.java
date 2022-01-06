@@ -18,8 +18,18 @@ public class RegisterPage {
     private final By btnRegister = By.xpath("//*[@id='RegisterForm']/fieldset/p/input");
     private final By lblRegisterSuccess = By.xpath("//div[@id='content']//p[text()='Registration Confirmed! You can now log in to the site.']");
     private final By lblRegisterAccountUsed = By.xpath("//div[@id = 'content']//p[@class='message error']");
-
+    private final By lblPasswordErrMsg = By.xpath("//li/label[@for='password']/following-sibling::label");
+    private final By lblPIDErrMsg = By.xpath("//li/label[@for='pid']/following-sibling::label");
     //elements
+
+    protected WebElement getLblPasswordErrMsg() {
+        return Constant.WEBDRIVER.findElement(this.lblPasswordErrMsg);
+    }
+
+    protected WebElement getLblPIDErrMsg() {
+        return Constant.WEBDRIVER.findElement(this.lblPIDErrMsg);
+    }
+
     protected WebElement getTabRegister() {
         return Constant.WEBDRIVER.findElement(tabRegister);
     }
@@ -51,25 +61,43 @@ public class RegisterPage {
     protected WebElement getLblRegisterAccountUsed() {
         return Constant.WEBDRIVER.findElement(lblRegisterAccountUsed);
     }
+
     //methods
+
+    public String getSuccessMessage() {
+        return this.getLblRegisterSuccess().getText();
+    }
+
+    public String getMgsRegisterAccountUsed() {
+        return this.getLblRegisterAccountUsed().getText();
+    }
+
+    public String getPasswordErrMsg() {
+        return this.getLblPasswordErrMsg().getText();
+    }
+
+    public String getPIDErrMsg() {
+        return this.getLblPIDErrMsg().getText();
+    }
 
     public void gotoRegister() {
         this.getTabRegister().click();
     }
 
     public void register(String name, String password, String confirm, String pid) {
-        this.getTxtEmail().sendKeys(name);
-        this.getTxtPassword().sendKeys(password);
-        this.getTxtConfirm().sendKeys(confirm);
-        this.getTxtPid().sendKeys(pid);
-        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 3000);
-        wait.until(ExpectedConditions.elementToBeClickable(getBtnRegister()));
-        this.getBtnRegister().click();
+        try{
+            this.getTxtEmail().sendKeys(name);
+            this.getTxtPassword().sendKeys(password);
+            this.getTxtConfirm().sendKeys(confirm);
+            this.getTxtPid().sendKeys(pid);
+            WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, 3000);
+            wait.until(ExpectedConditions.elementToBeClickable(getBtnRegister())).click();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    public String getMgsRegisterAccountUsed() {
-        return this.getLblRegisterAccountUsed().getText();
-    }
 
     public String getMgsRegisterSuccess() {
         return this.getLblRegisterSuccess().getText();

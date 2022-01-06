@@ -1,42 +1,59 @@
+import Common.AccountRandom;
 import Common.JsonHelper;
 import Common.Utilities;
 import Constant.Constant;
-import Railway.BookticketPage;
-import Railway.HomePage;
-import Railway.LoginPage;
-import Railway.MyTicketPage;
+import Railway.*;
 import com.google.gson.JsonObject;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TC16 extends BaseTest {
-
-    @Test(description = "User can cancel a ticket", dataProvider = "data-provider")
-    public void MyticketTC16(String departStation, String arriveStation, String seatType, String ticketAmount) {
+    @Test(description = "TC16 - User can cancel a ticket", dataProvider = "data-provider")
+    public void TC016(String departStation, String arriveStation, String seatType, String ticketAmount) {
         HomePage homePage = new HomePage();
+        RegisterPage registerPage = new RegisterPage();
         LoginPage loginPage = new LoginPage();
         BookticketPage bookticketPage = new BookticketPage();
+        AccountRandom accountRandom = new AccountRandom();
         MyTicketPage myTicketPage = new MyTicketPage();
+
+        System.out.println("Pre-condition: Create and activate a new account");
+        homePage.open();
+        registerPage.gotoRegister();
+        registerPage.register(accountRandom.createEmail(),
+                accountRandom.createPassword(),
+                accountRandom.createConfirm(),
+                accountRandom.createPid());
         System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
+
         System.out.println("2. Login with a valid account");
         loginPage.gotoLoginPage();
-        loginPage.Login(Constant.USENAME, Constant.PASSWORD);
-        System.out.println("3. Book a ticket");
+        loginPage.Login(accountRandom.email, accountRandom.strPassword);
+
+        System.out.println("3. Book a ticket.");
         bookticketPage.gotoBookTickPage();
-        bookticketPage.getDepartDate();
+        bookticketPage.getDepartDate(bookticketPage.getDay(7));
         bookticketPage.getDepartFrom(departStation);
-        bookticketPage.getArriveAt(departStation);
+        bookticketPage.getArriveAt(arriveStation);
         bookticketPage.getSeatType(seatType);
         bookticketPage.getTicketAmount(ticketAmount);
-        System.out.println("4. Click on My ticket tab");
-        myTicketPage.gotoMyTicket();
-        System.out.println("5. Click on Cancel button of ticket which user want to cancel.");
-        myTicketPage.deleteTicket(3);
+        bookticketPage.getBtnSubmitBookTicket();
+
+        System.out.println("4. Click on 'My ticket' tab");
+        myTicketPage.gotoBookTickPage();
+
+        System.out.println("5. Cancel a ticket");
+        myTicketPage.getCancel("1", departStation, arriveStation);
+
+        Assert.assertFalse(myTicketPage.isCancelDisplay("1", departStation, arriveStation), "");
+
+        System.out.println("Test Case ran.");
     }
 
     @DataProvider(name = "data-provider")
-    public Object[][] dataProvider() {
+    public Object[][] dataProvider(){
         JsonObject jsonObject = JsonHelper.getJsonObject(Utilities.jsonProjectPath());
         JsonObject dataTC16 = jsonObject.getAsJsonObject(this.getClass().getSimpleName());
         String departStation = dataTC16.get("Depart from").getAsString();

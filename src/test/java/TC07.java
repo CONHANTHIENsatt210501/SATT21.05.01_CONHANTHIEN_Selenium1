@@ -15,9 +15,9 @@ public class TC07 extends BaseTest{
         System.out.println("2. Click on Register tab");
         registerPage.gotoRegister();
         registerPage.register(
-                accountRandom.createEmail()
-                ,accountRandom.createPassword()
-                ,accountRandom.createConfirmSucess()
+                accountRandom.createEmail(),
+                accountRandom.createPassword(),
+                accountRandom.createConfirm()
                 ,accountRandom.createPid());
 
         String actualMsg = registerPage.getMgsRegisterSuccess();

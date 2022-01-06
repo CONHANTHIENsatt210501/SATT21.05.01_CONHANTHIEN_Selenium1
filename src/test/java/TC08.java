@@ -20,8 +20,8 @@ public class TC08 extends BaseTest {
         registerPage.register(
                 accountRandom.createEmail(),
                 accountRandom.createPassword(),
-                accountRandom.createConfirmSucess(),
-                accountRandom.createPid());
+                accountRandom.createConfirm()
+                ,accountRandom.createPid());
 
         String actualMsg = registerPage.getMgsRegisterAccountUsed();
         String expectedMsg = "Thank you for registering your account";

@@ -23,19 +23,22 @@ public class TC17  extends BaseTest{
         System.out.println("Pre-condition: Create and activate a new account");
         homePage.open();
         registerPage.gotoRegister();
-        registerPage.register(accountRandom.createEmail(), accountRandom.createPassword(), accountRandom.createConfirmSucess(),accountRandom.createPid());
+        registerPage.register(accountRandom.createEmail(),
+                accountRandom.createPassword(),
+                accountRandom.createConfirm(),
+                accountRandom.createPid());
         System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
 
         System.out.println("2. Login with a valid account ");
         loginPage.gotoLoginPage();
-        loginPage.Login(Constant.USENAME, Constant.PASSWORD);
+        loginPage.Login(accountRandom.email, accountRandom.strPassword);
 
         System.out.println("3. Click on 'Book ticket' tab");
         bookticketPage.gotoBookTickPage();
 
         System.out.println("4. Book 10 tickets.");
-        bookticketPage.getDepartDate();
+        bookticketPage.getDepartDate(bookticketPage.getDay(7));
         bookticketPage.getDepartFrom(departStation);
         bookticketPage.getArriveAt(arriveStation);
         bookticketPage.getSeatType(seatType);
@@ -46,7 +49,7 @@ public class TC17  extends BaseTest{
         bookticketPage.gotoBookTickPage();
 
         System.out.println("6. Book one more ticket.");
-        bookticketPage.getDepartDate();
+        bookticketPage.getDepartDate(bookticketPage.getDay(7));
         bookticketPage.getDepartFrom(departStation);
         bookticketPage.getArriveAt(arriveStation);
         bookticketPage.getSeatType(seatType);
